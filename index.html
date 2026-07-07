@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>Messenger</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== Экран загрузки ===== -->
+  <div id="screen-loading" class="screen center">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- ===== Экран входа ===== -->
+  <div id="screen-login" class="screen center hidden">
+    <div class="auth-box">
+      <div class="auth-logo">💬</div>
+      <h1>Вход в мессенджер</h1>
+      <p class="muted">Введите email и пароль для входа</p>
+      <form id="login-form">
+        <input type="email" id="login-email" placeholder="Email" required autocomplete="email" />
+        <input type="password" id="login-password" placeholder="Пароль" required autocomplete="current-password" />
+        <p class="error-text" id="login-error"></p>
+        <button type="submit" class="btn-primary">Войти</button>
+      </form>
+      <p class="muted center-text">Нет аккаунта? <a href="#" id="go-register">Зарегистрироваться</a></p>
+    </div>
+  </div>
+
+  <!-- ===== Экран регистрации ===== -->
+  <div id="screen-register" class="screen center hidden">
+    <div class="auth-box">
+      <div class="auth-logo">💬</div>
+      <h1>Регистрация</h1>
+      <p class="muted">Создайте аккаунт, чтобы начать общаться</p>
+      <form id="register-form">
+        <input type="text" id="register-name" placeholder="Имя" required autocomplete="name" />
+        <input type="email" id="register-email" placeholder="Email" required autocomplete="email" />
+        <input type="password" id="register-password" placeholder="Пароль (мин. 6 символов)" required minlength="6" autocomplete="new-password" />
+        <p class="error-text" id="register-error"></p>
+        <button type="submit" class="btn-primary">Зарегистрироваться</button>
+      </form>
+      <p class="muted center-text">Уже есть аккаунт? <a href="#" id="go-login">Войти</a></p>
+    </div>
+  </div>
+
+  <!-- ===== Экран мессенджера ===== -->
+  <div id="screen-app" class="screen app-layout hidden">
+
+    <!-- Сайдбар со списком чатов -->
+    <div id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <div class="avatar" id="my-avatar"></div>
+        <div class="sidebar-header-info">
+          <p class="name" id="my-name"></p>
+          <p class="muted small" id="my-email"></p>
+        </div>
+        <button class="icon-btn" id="btn-new-chat" title="Новый чат">✎</button>
+        <button class="icon-btn" id="btn-logout" title="Выйти">⎋</button>
+      </div>
+      <div class="sidebar-search">
+        <input type="text" id="chat-search" placeholder="Поиск чатов" />
+      </div>
+      <div class="chat-list" id="chat-list">
+        <div class="empty-hint" id="chat-list-empty">У вас пока нет чатов. Нажмите ✎, чтобы начать.</div>
+      </div>
+    </div>
+
+    <!-- Окно чата -->
+    <div id="chat-window" class="chat-window">
+      <div class="chat-empty" id="chat-empty">
+        <div class="chat-empty-icon">💬</div>
+        <p class="muted">Выберите чат, чтобы начать переписку</p>
+      </div>
+
+      <div class="chat-active hidden" id="chat-active">
+        <div class="chat-header">
+          <button class="icon-btn mobile-only" id="btn-back">←</button>
+          <div class="avatar" id="chat-avatar"></div>
+          <div class="chat-header-info">
+            <p class="name" id="chat-title"></p>
+            <p class="muted small" id="chat-subtitle"></p>
+          </div>
+        </div>
+
+        <div class="messages" id="messages"></div>
+
+        <form class="composer" id="composer">
+          <textarea id="composer-input" placeholder="Написать сообщение..." rows="1"></textarea>
+          <button type="submit" class="send-btn" id="composer-send">➤</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Модалка "Новый чат" ===== -->
+  <div id="modal-overlay" class="modal-overlay hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Новый чат</h2>
+        <button class="icon-btn" id="modal-close">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="tabs">
+          <button class="tab active" id="tab-direct" data-mode="direct">Личный чат</button>
+          <button class="tab" id="tab-group" data-mode="group">Группа</button>
+        </div>
+        <input type="text" id="group-name" class="hidden" placeholder="Название группы" />
+        <div id="selected-users" class="selected-users"></div>
+        <input type="text" id="user-search" placeholder="Поиск по имени" />
+        <div class="user-results" id="user-results"></div>
+        <p class="error-text" id="modal-error"></p>
+        <button class="btn-primary" id="modal-create">Создать чат</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- Firebase SDK (compat, без сборщика — обычные script-теги) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+  <script src="firebase-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
