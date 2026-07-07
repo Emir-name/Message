@@ -1,0 +1,32 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "users": {
+      ".read": "auth != null",
+      "$uid": {
+        ".write": "auth != null && auth.uid === $uid"
+      }
+    },
+
+    "chats":        { ".read": "auth != null", ".write": "auth != null" },
+    "channels":     { ".read": "auth != null", ".write": "auth != null" },
+    "messages":     { ".read": "auth != null", ".write": "auth != null" },
+    "calls":        { ".read": "auth != null", ".write": "auth != null" },
+    "call_history": { ".read": "auth != null", ".write": "auth != null" },
+    "group_calls":  { ".read": "auth != null", ".write": "auth != null" },
+    "typing":       { ".read": "auth != null", ".write": "auth != null" },
+    "stories":      { ".read": "auth != null", ".write": "auth != null" },
+    "posts":        { ".read": "auth != null", ".write": "auth != null" },
+    "bots":         { ".read": "auth != null", ".write": "auth != null" },
+    "invites":      { ".read": "auth != null", ".write": "auth != null" },
+    "reports":      { ".read": "auth != null", ".write": "auth != null" },
+    "sessions": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid"
+      }
+    }
+  }
+}
